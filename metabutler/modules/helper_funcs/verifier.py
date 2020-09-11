@@ -12,27 +12,10 @@ from metabutler.modules.helper_funcs.alternate import send_message
 
 
 verify_code = ["🙏", "👈", "👉", "👇", "👆", "❤️", "🅰️", "🅱️", "0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
-verify_code_images = {
-"🙏": "https://telegra.ph/file/785aba452f52876c71782.jpg", 
-"👈": "https://telegra.ph/file/521ca6dacb63b1e1762a1.jpg",
-"👉": "https://telegra.ph/file/3ff7a4c25abd3227e4a4c.jpg",
-"👇": "https://telegra.ph/file/5ec6e0de9c518eefa0892.jpg",
-"👆": "https://telegra.ph/file/8011dfd625f4fb83c45dd.jpg",
-"❤️": "https://telegra.ph/file/70ab2793d0ebcb6e32242.jpg",
-"🅰️": "https://telegra.ph/file/09db669a8d477f4b999d9.jpg",
-"🅱️": "https://telegra.ph/file/377919cb050cbfc17bcdf.jpg",
-"0️⃣": "https://telegra.ph/file/47fe59efcf35b9cedcdff.jpg",
-"1️⃣": "https://telegra.ph/file/eb56b61a801e4956ebe74.jpg",
-"2️⃣": "https://telegra.ph/file/aed9b6f2074abee5cdf93.jpg",
-"3️⃣": "https://telegra.ph/file/bc5fa0f129a6e21fe55ce.jpg",
-"4️⃣": "https://telegra.ph/file/ec9f513014afa7946f1b0.jpg",
-"5️⃣": "https://telegra.ph/file/8ac42b877524b0d30c5a3.jpg",
-"6️⃣": "https://telegra.ph/file/1d69ec6b5dd8e827979d5.jpg",
-"7️⃣": "https://telegra.ph/file/b0fc2d10db9c7acedfe2a.jpg",
-"8️⃣": "https://telegra.ph/file/557644891a14b7e7ac72f.jpg",
-"9️⃣": "https://telegra.ph/file/148a5c2ff8d1ca354dca7.jpg",
-"🔟": "https://telegra.ph/file/67175a896d5769617a3e3.jpg"}
-
+verify_code_links = {
+"🙏": "www.google.com", 
+"👈": "www.fb.com",
+"👉": "www.youtube.com",
 
 def verify_welcome(update, context, chat_id):
 	user_id = update.effective_user.id
@@ -43,7 +26,7 @@ def verify_welcome(update, context, chat_id):
 	elif user_id in list(is_clicked) and is_clicked[user_id] == True:
 		send_message(update.effective_message, "You are not in verification mode, if you are muted, you can ask the admin of the group for help")
 		return
-	verify_code = ["🙏", "👈", "👉", "👇", "👆", "❤️", "🅰️", "🅱️", "0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
+	verify_code = ["️www.google.com"]
 	print(len(verify_code))
 	real_btn = random.choice(verify_code)
 	verify_code.remove(real_btn)
@@ -59,15 +42,15 @@ def verify_welcome(update, context, chat_id):
 		for y in range(3):
 			y += 1
 			if verbox[0] == y and ver1:
-				verify_emoji = real_btn
-				linebox.append(InlineKeyboardButton(text=verify_emoji, callback_data="verify_me(y|{}|{})".format(user_id, chat_id)))
+				verify_link = real_btn
+				linebox.append(InlineKeyboardButton(text=verify_link, callback_data="verify_me(y|{}|{})".format(user_id, chat_id)))
 			else:
-				verify_emoji = random.choice(verify_code)
-				linebox.append(InlineKeyboardButton(text=verify_emoji, callback_data="verify_me(n|{}|{})".format(user_id, chat_id)))
+				verify_link = random.choice(verify_code)
+				linebox.append(InlineKeyboardButton(text=verify_link, callback_data="verify_me(n|{}|{})".format(user_id, chat_id)))
 				verify_code.remove(verify_emoji)
 		buttons.append(linebox)
 		linebox = []
-	context.bot.send_photo(user_id, photo=verify_code_images[real_btn], caption="Please select matching emoji below:", parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(buttons))
+	context.bot.send_photo(user_id, photo=verify_code_links[real_btn], caption="Please select matching link below:", parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(buttons))
 
 def verify_button_pressed(update, context):
 	chat = update.effective_chat  # type: Optional[Chat]
@@ -90,7 +73,7 @@ def verify_button_pressed(update, context):
 			sql.rm_from_timeout(chat_id, user_id)
 		except BadRequest as err:
 			if not update.effective_chat.get_member(context.bot.id).can_restrict_members:
-				query.answer(text="I can't restrict people here, ask admin to unmute you!")
+				query.answer(text="<a href="http://www.google.com/">inline URL</a>", parse_mode="html")
 			else:
 				query.answer(text="Error: " + str(err))
 			return
