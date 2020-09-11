@@ -11,7 +11,7 @@ import metabutler.modules.sql.welcome_sql as sql
 from metabutler.modules.helper_funcs.alternate import send_message
 
 
-verify_code = ["🙏", "👈", "👉", "👇", "👆", "❤️", "🅰️", "🅱️", "0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
+verify_code = ["🙏", "👈", "👉"]
 verify_code_links = {
 "🙏": "www.google.com", 
 "👈": "www.fb.com",
